@@ -46,9 +46,15 @@ def create_editable_grid():
         for col, header in enumerate(headers):
             if header == "Points (Value)":
                 width = 8  # Narrow width for points column
+                state = 'disabled'  # Disable the Points column
             else:
                 width = 14  # Regular width for other columns
-            cell = tk.Entry(game_window, width=width, font=('Helvetica', 12), justify='center')
+                if row == 2:  # Make only the first empty row (row 2) editable
+                    state = 'normal'
+                else:
+                    state = 'disabled'  # Disable all other rows
+
+            cell = tk.Entry(game_window, width=width, font=('Helvetica', 12), justify='center', state=state)
             cell.grid(row=row, column=col + 1, sticky='nsew', padx=1, pady=1, ipady=8)  # Column shift for margins
             row_cells.append(cell)
         cells.append(row_cells)
