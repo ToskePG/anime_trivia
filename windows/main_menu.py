@@ -2,7 +2,7 @@
 
 import tkinter as tk
 from tkinter import messagebox
-from game_table import create_editable_grid
+from windows.game_table import create_editable_grid
 
 def open_main_menu():
     # Create the main menu window
