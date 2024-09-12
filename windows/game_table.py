@@ -71,12 +71,13 @@ def create_editable_grid():
         if selected_option == "Custom":
             custom_time = ask_for_custom_time()
             if custom_time:
-                selected_time_in_seconds = custom_time
-                timer_label.config(text=f"Time Left: {custom_time // 60}:00")  # Update label
+                selected_time_in_seconds = custom_time  # Update with the custom time in seconds
+                minutes, seconds = divmod(selected_time_in_seconds, 60)
+                timer_label.config(text=f"Time Left: {minutes:02}:00")  # Update label with the custom time
         else:
             time_in_minutes = int(selected_option.split()[0])  # Get the numeric part from the option
             selected_time_in_seconds = time_in_minutes * 60  # Convert to seconds
-            timer_label.config(text=f"Time Left: {time_in_minutes}:00")  # Update label
+            timer_label.config(text=f"Time Left: {time_in_minutes:02}:00")  # Update label with the selected time
 
     # Time control and timer in one row, centered above the table
     time_controls_frame = tk.Frame(game_window, bg='#1e1e1e')
