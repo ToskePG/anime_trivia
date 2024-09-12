@@ -17,16 +17,20 @@ def create_editable_grid():
     num_rows = 10  # Reduced number of rows to make it cleaner
     num_cols = len(headers)
 
-    # Create a label for the timer
-    timer_label = tk.Label(game_window, text="Time Left: 4:00", font=('Helvetica', 16), bg='#1e1e1e', fg='white')
-    timer_label.grid(row=0, column=2, columnspan=num_cols, pady=10)  # Adding margins by shifting the columns
-    
-    # Create left and right margin fillers (add more columns to the left and right for bigger margins)
-    left_margin = tk.Label(game_window, bg='#1e1e1e', width=5)
-    left_margin.grid(row=0, column=0, rowspan=num_rows + 4)
+    # Time control and timer in one row, centered above the table
+    time_controls_frame = tk.Frame(game_window, bg='#1e1e1e')
+    time_controls_frame.grid(row=0, column=1, columnspan=num_cols, pady=10)
 
-    right_margin = tk.Label(game_window, bg='#1e1e1e', width=5)
-    right_margin.grid(row=0, column=num_cols + 2, rowspan=num_rows + 4)
+    # Create a label for the timer inside the frame
+    timer_label = tk.Label(time_controls_frame, text="Time Left: 4:00", font=('Helvetica', 16), bg='#1e1e1e', fg='white')
+    timer_label.pack(side=tk.RIGHT, padx=10)
+
+    # Time control selection dropdown inside the frame
+    time_control_var = tk.StringVar(value="4 minutes")
+    time_options = ["2 minutes", "4 minutes", "5 minutes", "8 minutes", "10 minutes", "Custom"]
+    time_control_menu = tk.OptionMenu(time_controls_frame, time_control_var, *time_options, command=set_time)
+    time_control_menu.config(font=('Helvetica', 14), bg='#61afef', fg='white')
+    time_control_menu.pack(side=tk.LEFT, padx=10)
 
     # Create header labels with styling
     for col, header in enumerate(headers):
@@ -124,13 +128,6 @@ def create_editable_grid():
             selected_time_in_seconds = time_in_minutes * 60  # Convert to seconds
             timer_label.config(text=f"Time Left: {time_in_minutes}:00")  # Update label
 
-    # Time control selection dropdown (combobox)
-    time_control_var = tk.StringVar(value="4 minutes")
-    time_options = ["2 minutes", "4 minutes", "5 minutes", "8 minutes", "10 minutes", "Custom"]
-    time_control_menu = tk.OptionMenu(game_window, time_control_var, *time_options, command=set_time)
-    time_control_menu.config(font=('Helvetica', 14), bg='#61afef', fg='white')
-    time_control_menu.grid(row=num_rows + 1, column=1, columnspan=num_cols, pady=10)
-
     # Set default selected time to 4 minutes
     selected_time_in_seconds = 4 * 60
 
@@ -148,3 +145,5 @@ def create_editable_grid():
 
     # Run the application
     game_window.mainloop()
+
+create_editable_grid()
