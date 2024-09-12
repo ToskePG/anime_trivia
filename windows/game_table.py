@@ -93,6 +93,13 @@ def create_editable_grid():
     time_control_menu.config(font=('Helvetica', 14), bg='#61afef', fg='white')
     time_control_menu.pack(side=tk.LEFT, padx=10)
 
+    # Create small margins on the left and right side
+    left_margin = tk.Label(game_window, width=3, bg='#1e1e1e')  # Left margin
+    left_margin.grid(row=1, column=0, rowspan=num_rows + 5)  # Make the margin span across the whole grid
+
+    right_margin = tk.Label(game_window, width=3, bg='#1e1e1e')  # Right margin
+    right_margin.grid(row=1, column=num_cols + 2, rowspan=num_rows + 5)  # Place the margin on the right side of the grid
+
     # Create header labels with styling
     for col, header in enumerate(headers):
         # Check if it's the "Points (Value)" column
