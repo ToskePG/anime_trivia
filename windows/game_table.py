@@ -3,6 +3,7 @@ from tkinter import messagebox
 from tkinter import simpledialog
 import random
 import string
+from windows.main_menu import open_main_menu
 
 def create_editable_grid():
     # Function to create the game grid
