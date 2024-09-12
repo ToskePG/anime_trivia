@@ -49,7 +49,9 @@ def create_editable_grid():
         start_button.config(state='disabled')  # Disable start button after starting
         random_letter_button.config(state='disabled')  # Disable random letter generator when the game starts
         enable_first_row()  # Make the first empty row editable
-        countdown(selected_time_in_seconds)  # Start the timer with the selected time
+
+        # Now start the countdown with the latest `selected_time_in_seconds`
+        countdown(selected_time_in_seconds)
 
     # Random letter generator
     def generate_random_letter():
