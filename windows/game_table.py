@@ -3,9 +3,10 @@ from tkinter import messagebox
 from tkinter import simpledialog
 import random
 import string
-from windows.main_menu import open_main_menu
 
 def create_editable_grid():
+    import windows.main_menu #Avoid circular import
+
     # Function to create the game grid
     game_window = tk.Tk()
     game_window.title("Editable Anime Table")
@@ -13,7 +14,7 @@ def create_editable_grid():
 
     def back_to_main_menu():
         game_window.destroy()
-        open_main_menu()
+        windows.main_menu.open_main_menu()
 
     # Define the table structure
     headers = ['Anime Show', 'Anime Character', 'Anime Movie', 'Anime Power', 'Anime Weapon', 
