@@ -42,6 +42,7 @@ def create_editable_grid():
 
     # Start the game and timer when the button is pressed
     def start_game():
+        global selected_time_in_seconds
         if random_letter_label.cget("text") == "Random Letter: ":  # If no letter is chosen
             messagebox.showerror("Error", "Please generate a random letter before starting the game.")
             return
@@ -67,7 +68,7 @@ def create_editable_grid():
         return None
 
     # Handle time selection (Move this above its first use)
-    def set_time(event):
+    def set_time(event=None):
         global selected_time_in_seconds
         selected_option = time_control_var.get()
         if selected_option == "Custom":
