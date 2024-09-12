@@ -1,5 +1,3 @@
-# game_table.py
-
 import tkinter as tk
 from tkinter import messagebox
 from tkinter import simpledialog
@@ -114,16 +112,15 @@ def create_editable_grid():
 
     # Handle time selection
     def set_time(event):
+        global selected_time_in_seconds
         selected_option = time_control_var.get()
         if selected_option == "Custom":
             custom_time = ask_for_custom_time()
             if custom_time:
-                global selected_time_in_seconds
                 selected_time_in_seconds = custom_time
                 timer_label.config(text=f"Time Left: {custom_time // 60}:00")  # Update label
         else:
             time_in_minutes = int(selected_option.split()[0])  # Get the numeric part from the option
-            global selected_time_in_seconds
             selected_time_in_seconds = time_in_minutes * 60  # Convert to seconds
             timer_label.config(text=f"Time Left: {time_in_minutes}:00")  # Update label
 
