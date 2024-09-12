@@ -1,8 +1,6 @@
-# main_menu.py
-
 import tkinter as tk
 from tkinter import messagebox
-from windows.game_table import create_editable_grid
+from windows.game_table import create_editable_grid  # Ensure this import path is correct
 
 def open_main_menu():
     # Create the main menu window
