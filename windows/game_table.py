@@ -17,6 +17,67 @@ def create_editable_grid():
     num_rows = 10  # Reduced number of rows to make it cleaner
     num_cols = len(headers)
 
+    # Countdown timer function (in seconds)
+    def countdown(time_left):
+        minutes, seconds = divmod(time_left, 60)
+        timer_label.config(text=f"Time Left: {minutes:02}:{seconds:02}")
+        
+        if time_left > 0:
+            game_window.after(1000, countdown, time_left - 1)  # Call countdown every second
+        else:
+            end_game()
+
+    # Disable all entry widgets to stop the game
+    def end_game():
+        for row in cells:
+            for cell in row:
+                cell.config(state='disabled')  # Disable all cells after time is up
+        messagebox.showinfo("Game Over", "Time's up! The game has ended.")
+    
+    # Enable the first row for editing after the game starts
+    def enable_first_row():
+        for col, header in enumerate(headers):
+            if header != "Points (Value)":  # Keep the "Points" column disabled
+                cells[0][col].config(state='normal')  # Enable the first row (row 2 in grid)
+
+    # Start the game and timer when the button is pressed
+    def start_game():
+        if random_letter_label.cget("text") == "Random Letter: ":  # If no letter is chosen
+            messagebox.showerror("Error", "Please generate a random letter before starting the game.")
+            return
+        
+        start_button.config(state='disabled')  # Disable start button after starting
+        random_letter_button.config(state='disabled')  # Disable random letter generator when the game starts
+        enable_first_row()  # Make the first empty row editable
+        countdown(selected_time_in_seconds)  # Start the timer with the selected time
+
+    # Random letter generator
+    def generate_random_letter():
+        letter = random.choice(string.ascii_uppercase)  # Randomly select a letter from A-Z
+        random_letter_label.config(text=f"Random Letter: {letter}")  # Update label with the random letter
+        start_button.config(state='normal')  # Enable the start button after a letter is chosen
+
+    # Function to select custom time
+    def ask_for_custom_time():
+        custom_time = simpledialog.askinteger("Custom Time", "Enter time in minutes (1-60):", minvalue=1, maxvalue=60)
+        if custom_time:
+            return custom_time * 60  # Convert minutes to seconds
+        return None
+
+    # Handle time selection (Move this above its first use)
+    def set_time(event):
+        global selected_time_in_seconds
+        selected_option = time_control_var.get()
+        if selected_option == "Custom":
+            custom_time = ask_for_custom_time()
+            if custom_time:
+                selected_time_in_seconds = custom_time
+                timer_label.config(text=f"Time Left: {custom_time // 60}:00")  # Update label
+        else:
+            time_in_minutes = int(selected_option.split()[0])  # Get the numeric part from the option
+            selected_time_in_seconds = time_in_minutes * 60  # Convert to seconds
+            timer_label.config(text=f"Time Left: {time_in_minutes}:00")  # Update label
+
     # Time control and timer in one row, centered above the table
     time_controls_frame = tk.Frame(game_window, bg='#1e1e1e')
     time_controls_frame.grid(row=0, column=1, columnspan=num_cols, pady=10)
@@ -66,67 +127,6 @@ def create_editable_grid():
         game_window.grid_columnconfigure(i, weight=1)
     for i in range(num_rows + 2):  # Adjust for header and timer
         game_window.grid_rowconfigure(i, weight=1)
-
-    # Countdown timer function (in seconds)
-    def countdown(time_left):
-        minutes, seconds = divmod(time_left, 60)
-        timer_label.config(text=f"Time Left: {minutes:02}:{seconds:02}")
-        
-        if time_left > 0:
-            game_window.after(1000, countdown, time_left - 1)  # Call countdown every second
-        else:
-            end_game()
-
-    # Disable all entry widgets to stop the game
-    def end_game():
-        for row in cells:
-            for cell in row:
-                cell.config(state='disabled')  # Disable all cells after time is up
-        messagebox.showinfo("Game Over", "Time's up! The game has ended.")
-    
-    # Enable the first row for editing after the game starts
-    def enable_first_row():
-        for col, header in enumerate(headers):
-            if header != "Points (Value)":  # Keep the "Points" column disabled
-                cells[0][col].config(state='normal')  # Enable the first row (row 2 in grid)
-
-    # Start the game and timer when the button is pressed
-    def start_game():
-        if random_letter_label.cget("text") == "Random Letter: ":  # If no letter is chosen
-            messagebox.showerror("Error", "Please generate a random letter before starting the game.")
-            return
-        
-        start_button.config(state='disabled')  # Disable start button after starting
-        random_letter_button.config(state='disabled')  # Disable random letter generator when the game starts
-        enable_first_row()  # Make the first empty row editable
-        countdown(selected_time_in_seconds)  # Start the timer with the selected time
-
-    # Random letter generator
-    def generate_random_letter():
-        letter = random.choice(string.ascii_uppercase)  # Randomly select a letter from A-Z
-        random_letter_label.config(text=f"Random Letter: {letter}")  # Update label with the random letter
-        start_button.config(state='normal')  # Enable the start button after a letter is chosen
-
-    # Function to select custom time
-    def ask_for_custom_time():
-        custom_time = simpledialog.askinteger("Custom Time", "Enter time in minutes (1-60):", minvalue=1, maxvalue=60)
-        if custom_time:
-            return custom_time * 60  # Convert minutes to seconds
-        return None
-
-    # Handle time selection
-    def set_time(event):
-        global selected_time_in_seconds
-        selected_option = time_control_var.get()
-        if selected_option == "Custom":
-            custom_time = ask_for_custom_time()
-            if custom_time:
-                selected_time_in_seconds = custom_time
-                timer_label.config(text=f"Time Left: {custom_time // 60}:00")  # Update label
-        else:
-            time_in_minutes = int(selected_option.split()[0])  # Get the numeric part from the option
-            selected_time_in_seconds = time_in_minutes * 60  # Convert to seconds
-            timer_label.config(text=f"Time Left: {time_in_minutes}:00")  # Update label
 
     # Set default selected time to 4 minutes
     selected_time_in_seconds = 4 * 60
