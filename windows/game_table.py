@@ -2,6 +2,7 @@
 
 import tkinter as tk
 from tkinter import messagebox
+from tkinter import simpledialog
 import random
 import string
 
@@ -96,13 +97,45 @@ def create_editable_grid():
         start_button.config(state='disabled')  # Disable start button after starting
         random_letter_button.config(state='disabled')  # Disable random letter generator when the game starts
         enable_first_row()  # Make the first empty row editable
-        countdown(4 * 60)  # 4 minutes = 240 seconds
+        countdown(selected_time_in_seconds)  # Start the timer with the selected time
 
     # Random letter generator
     def generate_random_letter():
         letter = random.choice(string.ascii_uppercase)  # Randomly select a letter from A-Z
         random_letter_label.config(text=f"Random Letter: {letter}")  # Update label with the random letter
         start_button.config(state='normal')  # Enable the start button after a letter is chosen
+
+    # Function to select custom time
+    def ask_for_custom_time():
+        custom_time = simpledialog.askinteger("Custom Time", "Enter time in minutes (1-60):", minvalue=1, maxvalue=60)
+        if custom_time:
+            return custom_time * 60  # Convert minutes to seconds
+        return None
+
+    # Handle time selection
+    def set_time(event):
+        selected_option = time_control_var.get()
+        if selected_option == "Custom":
+            custom_time = ask_for_custom_time()
+            if custom_time:
+                global selected_time_in_seconds
+                selected_time_in_seconds = custom_time
+                timer_label.config(text=f"Time Left: {custom_time // 60}:00")  # Update label
+        else:
+            time_in_minutes = int(selected_option.split()[0])  # Get the numeric part from the option
+            global selected_time_in_seconds
+            selected_time_in_seconds = time_in_minutes * 60  # Convert to seconds
+            timer_label.config(text=f"Time Left: {time_in_minutes}:00")  # Update label
+
+    # Time control selection dropdown (combobox)
+    time_control_var = tk.StringVar(value="4 minutes")
+    time_options = ["2 minutes", "4 minutes", "5 minutes", "8 minutes", "10 minutes", "Custom"]
+    time_control_menu = tk.OptionMenu(game_window, time_control_var, *time_options, command=set_time)
+    time_control_menu.config(font=('Helvetica', 14), bg='#61afef', fg='white')
+    time_control_menu.grid(row=num_rows + 1, column=1, columnspan=num_cols, pady=10)
+
+    # Set default selected time to 4 minutes
+    selected_time_in_seconds = 4 * 60
 
     # Create a start button with styling (disabled until a letter is chosen)
     start_button = tk.Button(game_window, text="Start Game", command=start_game, font=('Helvetica', 16, 'bold'), bg='green', fg='white', width=20, height=2, state='disabled')
