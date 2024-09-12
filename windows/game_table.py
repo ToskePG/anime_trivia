@@ -9,7 +9,11 @@ def create_editable_grid():
     game_window = tk.Tk()
     game_window.title("Editable Anime Table")
     game_window.configure(bg='#1e1e1e')
-    
+
+    def back_to_main_menu():
+        game_window.destroy()
+        open_main_menu()
+
     # Define the table structure
     headers = ['Anime Show', 'Anime Character', 'Anime Movie', 'Anime Power', 'Anime Weapon', 
                'Anime Place/Realm', 'Anime Studio/Author', 'Anime Monster/Race', 'Points (Value)']
@@ -132,5 +136,9 @@ def create_editable_grid():
 
     random_letter_label = tk.Label(game_window, text="Random Letter: ", font=('Helvetica', 16, 'bold'), bg='#1e1e1e', fg='white')
     random_letter_label.grid(row=num_rows + 3, column=1, columnspan=num_cols, pady=10)
+
+    # Add "Back to Main Menu" button
+    back_button = tk.Button(game_window, text="Back to Main Menu", command=back_to_main_menu, font=('Helvetica', 16, 'bold'), bg='#e06c75', fg='white', width=20, height=2)
+    back_button.grid(row=num_rows + 4, column=1, columnspan=num_cols, pady=10)
 
     game_window.mainloop()
