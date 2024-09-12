@@ -51,10 +51,7 @@ def create_editable_grid():
                 state = 'disabled'  # Disable the Points column
             else:
                 width = 14  # Regular width for other columns
-                if row == 2:  # Make only the first empty row (row 2) editable
-                    state = 'normal'
-                else:
-                    state = 'disabled'  # Disable all other rows
+                state = 'disabled'  # Initially, all rows are uneditable
 
             cell = tk.Entry(game_window, width=width, font=('Helvetica', 12), justify='center', state=state)
             cell.grid(row=row, column=col + 1, sticky='nsew', padx=1, pady=1, ipady=8)  # Column shift for margins
@@ -84,19 +81,31 @@ def create_editable_grid():
                 cell.config(state='disabled')  # Disable all cells after time is up
         messagebox.showinfo("Game Over", "Time's up! The game has ended.")
     
+    # Enable the first row for editing after the game starts
+    def enable_first_row():
+        for col, header in enumerate(headers):
+            if header != "Points (Value)":  # Keep the "Points" column disabled
+                cells[0][col].config(state='normal')  # Enable the first row (row 2 in grid)
+
     # Start the game and timer when the button is pressed
     def start_game():
+        if random_letter_label.cget("text") == "Random Letter: ":  # If no letter is chosen
+            messagebox.showerror("Error", "Please generate a random letter before starting the game.")
+            return
+        
         start_button.config(state='disabled')  # Disable start button after starting
-        random_letter_button.config(state='disabled') # Disable random letter generator when the game starts
+        random_letter_button.config(state='disabled')  # Disable random letter generator when the game starts
+        enable_first_row()  # Make the first empty row editable
         countdown(4 * 60)  # 4 minutes = 240 seconds
 
     # Random letter generator
     def generate_random_letter():
         letter = random.choice(string.ascii_uppercase)  # Randomly select a letter from A-Z
         random_letter_label.config(text=f"Random Letter: {letter}")  # Update label with the random letter
+        start_button.config(state='normal')  # Enable the start button after a letter is chosen
 
-    # Create a start button with styling
-    start_button = tk.Button(game_window, text="Start Game", command=start_game, font=('Helvetica', 16, 'bold'), bg='green', fg='white', width=20, height=2)
+    # Create a start button with styling (disabled until a letter is chosen)
+    start_button = tk.Button(game_window, text="Start Game", command=start_game, font=('Helvetica', 16, 'bold'), bg='green', fg='white', width=20, height=2, state='disabled')
     start_button.grid(row=num_rows + 2, column=1, columnspan=(num_cols//2), pady=10)
     
     # Create a button to generate random letter
