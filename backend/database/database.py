@@ -1,8 +1,6 @@
-# app/database/database.py
-
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from app.database.models import Base
+from backend.database.models import Base
 import logging
 
 DATABASE_URL = "mysql+mysqlconnector://danilot:Adrenalin123@127.0.0.1:3306/anime_game"
