@@ -1,5 +1,6 @@
-from fastapi import FastAPI
-from backend.database.database import init_db
+from fastapi import FastAPI, Depends, HTTPException
+from backend.database.database import init_db, get_db
+from sqlalchemy import Session
 import logging
 
 # Configure logging
@@ -16,3 +17,13 @@ def check_health():
         "message": "Healthy",
         "statis": "200 OK"
     }
+
+# Health check endpoint to test database connection
+@app.get("/health/db")
+def check_db_connection(db: Session = Depends(get_db)):
+    try:
+        # Execute a simple query to check the connection
+        db.execute("SELECT 1")
+        return {"status": "Database connection successful"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail="Database connection failed")
