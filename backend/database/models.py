@@ -33,6 +33,7 @@ class Round(Base):
     created_at = Column(TIMESTAMP, nullable=False)
 
     game = relationship("Game", back_populates="rounds")
+    scores = relationship("Score", back_populates="round")
 
 class Score(Base):
     __tablename__ = "scores"
