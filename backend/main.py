@@ -19,7 +19,7 @@ def check_health():
     }
 
 # Health check endpoint to test database connection
-@app.get("/health/db")
+@app.get("/db_connection")
 def check_db_connection(db: Session = Depends(get_db)):
     try:
         # Execute a simple query to check the connection
