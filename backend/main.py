@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from backend.database.database import get_db
 import logging
 from backend.database.database import Base, engine
+from backend.routers.user import router as user_router
 
 
 # Configure logging
@@ -13,3 +14,6 @@ app = FastAPI()
 def startup():
     # Create the tables in the database
     Base.metadata.create_all(bind=engine)
+
+#Include routers
+app.include_router(user_router, prefix="/api/users")

@@ -20,6 +20,9 @@ class Game(Base):
     player1 = relationship("User", foreign_keys=[player1_id])
     player2 = relationship("User", foreign_keys=[player2_id])
 
+    # Add this line to define the relationship with rounds
+    rounds = relationship("Round", back_populates="game")
+
 class Round(Base):
     __tablename__ = "rounds"
     id = Column(Integer, primary_key=True, index=True)
