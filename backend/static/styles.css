@@ -1,75 +1,32 @@
-/* Basic styles for body and elements */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
-    margin: 0;
-    padding: 0;
-}
-
-/* Header styling */
-header {
-    background-color: #4CAF50;
-    color: white;
-    padding: 40px;
-    text-align: center;
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-/* Section styling */
-section {
-    padding: 40px;
-    text-align: center;
-    background-color: #fff;
-    margin: 20px auto;
-    max-width: 600px;
-    box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-}
-
-/* Heading styling */
-h1 {
-    font-size: 2.8em;
-    margin-bottom: 20px;
-    letter-spacing: 1px;
-}
-
-/* Paragraph styling */
-p {
-    font-size: 1.3em;
-    margin-bottom: 30px;
-}
-
 /* Button styling */
-a.button {
-    display: inline-block;
+button.button {
     padding: 15px 30px;
     background-color: #4CAF50;
     color: white;
-    text-decoration: none;
     font-size: 1.2em;
+    border: none;
     border-radius: 5px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    outline: none;
 }
 
 /* Hover effects for the button */
-a.button:hover {
+button.button:hover {
     background-color: #45a049;
-    transform: scale(1.05);
+    transform: translateY(-3px);
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
 }
 
-/* Responsive styles */
-@media (max-width: 600px) {
-    h1 {
-        font-size: 2em;
-    }
+/* Active state (click animation) */
+button.button:active {
+    transform: translateY(2px);
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.2);
+}
 
-    p {
-        font-size: 1.1em;
-    }
-
-    a.button {
-        padding: 10px 20px;
-        font-size: 1em;
-    }
+/* Focus state for accessibility */
+button.button:focus {
+    outline: none;
+    box-shadow: 0px 0px 0px 3px rgba(76, 175, 80, 0.5);
 }
