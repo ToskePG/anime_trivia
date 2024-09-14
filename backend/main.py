@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Depends, HTTPException
 from backend.database.database import init_db, get_db
-from sqlalchemy import Session
+from sqlalchemy.orm import Session
 import logging
 
 # Configure logging
