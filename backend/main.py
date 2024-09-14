@@ -4,12 +4,15 @@ import logging
 from backend.database.database import Base, engine
 from backend.routers.user import router as user_router
 from backend.routers.home import router as home_router
+from fastapi.staticfiles import StaticFiles
 
 
 # Configure logging
 logging.getLogger("sqlalchemy.engine").setLevel(logging.WARNING)
 
 app = FastAPI()
+
+app.mount("/backend/static", StaticFiles(directory="backend/static"), name="static")
 
 @app.on_event("startup")
 def startup():
