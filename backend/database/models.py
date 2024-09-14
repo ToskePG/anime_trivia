@@ -1,8 +1,6 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, TIMESTAMP, JSON
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-
-Base = declarative_base()
+from backend.database.database import Base
 
 class User(Base):
     __tablename__ = "users"

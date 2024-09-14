@@ -1,36 +1,36 @@
-import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from backend.database.models import Base
 from dotenv import load_dotenv
 import logging
+import os
 
-# Load environment variables from the .env file
+# Load environment variables from .env file
 load_dotenv()
 
-# Retrieve database credentials from environment variables
-DB_USER = os.getenv("DB_USER")
-DB_PASSWORD = os.getenv("DB_PASSWORD")
-DB_HOST = os.getenv("DB_HOST")
-DB_PORT = os.getenv("DB_PORT")
-DB_NAME = os.getenv("DB_NAME")
+# Get MySQL database connection parameters from environment variables
+MYSQL_USER = os.getenv("MYSQL_USER")
+MYSQL_PASSWORD = os.getenv("MYSQL_PASSWORD")
+MYSQL_HOST = os.getenv("MYSQL_HOST", "localhost")
+MYSQL_PORT = os.getenv("MYSQL_PORT", "3306")
+MYSQL_DB = os.getenv("MYSQL_DB")
 
-# Construct the DATABASE_URL from the loaded environment variables
-DATABASE_URL = "mysql+mysqlconnector://danilot:Adrenalin123@127.0.0.1:3306/anime_game"
+# SQLAlchemy connection string for MySQL
+SQLALCHEMY_DATABASE_URL = f"mysql+mysqlconnector://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DB}"
 
-# Configure logging to suppress SQLAlchemy INFO logs
-logging.getLogger("sqlalchemy.engine").setLevel(logging.WARNING)
+# Create an engine that connects to the database
+engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
-# Create the engine
-engine = create_engine(DATABASE_URL, echo=True)
+# Create a SessionLocal class that will be used to create session objects
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
+# Create a base class for the ORM models
+Base = declarative_base()
+
+# Dependency to get the database session
 def get_db():
     db = SessionLocal()
     try:
         yield db
     finally:
         db.close()
-
-def init_db():
-    Base.metadata.create_all(bind=engine)
