@@ -16,7 +16,7 @@ DB_PORT = os.getenv("DB_PORT")
 DB_NAME = os.getenv("DB_NAME")
 
 # Construct the DATABASE_URL from the loaded environment variables
-DATABASE_URL = f"mysql+mysqlconnector://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+DATABASE_URL = "mysql+mysqlconnector://danilot:Adrenalin123@127.0.0.1:3306/anime_game"
 
 # Configure logging to suppress SQLAlchemy INFO logs
 logging.getLogger("sqlalchemy.engine").setLevel(logging.WARNING)
