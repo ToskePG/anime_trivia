@@ -12,3 +12,4 @@ python-jose[cryptography]
 email-validator
 PyJWT
 jinja2
+python-multipart

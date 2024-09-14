@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, TIMESTAMP, JSON
+from sqlalchemy import Column, Integer, String, ForeignKey, TIMESTAMP, JSON, Boolean
 from sqlalchemy.orm import relationship
 from backend.database.database import Base
 
@@ -8,6 +8,7 @@ class User(Base):
     email = Column(String(255), unique=True)
     username = Column(String(50), unique=True, nullable=False)
     password = Column(String(255), nullable=False)
+    is_confirmed = Column(Boolean, default=False)
     created_at = Column(TIMESTAMP, nullable=False)
 
 class Game(Base):
