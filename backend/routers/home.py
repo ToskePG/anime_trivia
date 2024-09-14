@@ -14,6 +14,6 @@ def home(request: Request):
     return templates.TemplateResponse("home.html", {"request": request})
 
 # Serve favicon from static/images folder
-@router.get("/favicon.ico", include_in_schema=False)
+@router.get("/favicon.png", include_in_schema=False)
 async def favicon():
-    return FileResponse("static/images/favicon
+    return FileResponse("static/images/favicon.png")
