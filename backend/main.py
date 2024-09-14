@@ -15,7 +15,7 @@ init_db()
 def check_health():
     return {
         "message": "Healthy",
-        "statis": "200 OK"
+        "status": "200 OK"
     }
 
 # Health check endpoint to test database connection
