@@ -6,7 +6,7 @@ from fastapi.responses import FileResponse
 router = APIRouter()
 
 # Set up Jinja2 templates directory
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(directory="backend/templates")
 
 # Home route to render the home page
 @router.get("/")
