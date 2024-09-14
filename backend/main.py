@@ -3,6 +3,7 @@ from backend.database.database import get_db
 import logging
 from backend.database.database import Base, engine
 from backend.routers.user import router as user_router
+from backend.routers.home import router as home_router
 
 
 # Configure logging
@@ -16,4 +17,5 @@ def startup():
     Base.metadata.create_all(bind=engine)
 
 #Include routers
+app.include_router(home_router)
 app.include_router(user_router, prefix="/api/users")
