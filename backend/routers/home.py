@@ -9,7 +9,7 @@ router = APIRouter()
 templates = Jinja2Templates(directory="backend/templates")
 
 # Home route to render the home page
-@router.get("/")
+@router.get("/", tags=['Home'])
 def home(request: Request):
     return templates.TemplateResponse("home.html", {"request": request})
 

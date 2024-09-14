@@ -11,7 +11,7 @@ class UserResponse(BaseModel):
     username: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class GameCreate(BaseModel):
     player1_id: int
@@ -23,4 +23,4 @@ class GameResponse(BaseModel):
     player2_id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
