@@ -1,0 +1,14 @@
+ANIME_GAME/
+├── backend/
+│   ├── main.py  # FastAPI app entry point
+│   ├── models.py  # Database models
+│   ├── crud.py  # CRUD operations
+│   ├── database.py  # DB connection setup
+├── windows/
+│   ├── game_table.py
+│   ├── main_menu.py
+├── .gitignore
+├── anime_table.pdf
+├── animeGame.pdf
+├── main.py
+├── requirements.txt

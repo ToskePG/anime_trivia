@@ -1,1 +1,14 @@
 reportlab
+fastapi
+uvicorn
+mysql-connector-python
+pydantic
+python-dotenv
+sqlalchemy
+databases
+bcrypt
+passlib[bcrypt]
+python-jose[cryptography]
+email-validator
+PyJWT
+jinja2
